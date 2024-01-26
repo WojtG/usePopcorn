@@ -1,13 +1,10 @@
 import Logo from "./Logo";
-import NumberResults from "./NumberResults";
-import Search from "./Search";
 
-function Nav() {
+function Nav({ children }) {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumberResults />
+      {children}
     </nav>
   );
 }
