@@ -16,8 +16,11 @@ export default function StarRating({
   size = 48,
   messages = [],
   className = "",
+  defaultRating = 0,
 }) {
-  const [rating, setRating] = useState(0);
+  const initialRating = Math.max(Math.min(defaultRating, maxRating));
+
+  const [rating, setRating] = useState(initialRating);
   const [tempRating, setTempRating] = useState(0);
 
   const textStyle = {

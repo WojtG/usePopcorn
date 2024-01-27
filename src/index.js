@@ -14,6 +14,7 @@ root.render(
       color={"red"}
       size={32}
       messages={["terrible", "bad", "okay", "good", "amazing"]}
+      defaultRating={3}
     />
   </React.StrictMode>
 );
