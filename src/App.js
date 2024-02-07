@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "./Nav";
 import Main from "./Main";
 import Box from "./Box";
@@ -55,9 +55,33 @@ const tempMovieData = [
   },
 ];
 
+const KEY = "1bdd65a";
+
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+
+  useEffect(() => {
+    async function fetchMovies() {
+      try {
+        const response = await fetch(
+          `https://www.omdbapi.com/?s=Shrek&apikey=${KEY}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+        setMovies(data.Search);
+      } catch (err) {
+        console.error(err.message);
+        throw err;
+      }
+    }
+
+    fetchMovies();
+  }, []);
 
   return (
     <>
