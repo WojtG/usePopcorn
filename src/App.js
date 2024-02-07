@@ -7,6 +7,7 @@ import NumberResults from "./NumberResults";
 import MovieList from "./MovieList";
 import WatchedMovieList from "./WatchedMovieList";
 import WatchedSummary from "./WatchedSummary";
+import Loader from "./Loader";
 
 const tempWatchedData = [
   {
@@ -60,10 +61,13 @@ const KEY = "1bdd65a";
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchMovies() {
       try {
+        setIsLoading(true);
         const response = await fetch(
           `https://www.omdbapi.com/?s=Shrek&apikey=${KEY}`
         );
@@ -73,10 +77,16 @@ function App() {
         }
 
         const data = await response.json();
+
+        if (data.Response === "False")
+          throw new Error("Movie not found, try again");
+
         setMovies(data.Search);
       } catch (err) {
-        console.error(err.message);
-        throw err;
+        setError(err.message);
+        console.log(err.message);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -91,7 +101,9 @@ function App() {
       </Nav>
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          {error && <ErrorMsg msg={error} />}
+          {isLoading && <Loader />}
+          {!error && !isLoading && <MovieList movies={movies} />}
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
@@ -102,3 +114,12 @@ function App() {
   );
 }
 export default App;
+
+function ErrorMsg({ msg }) {
+  return (
+    <p className="error">
+      {msg}
+      <span>🛑</span>
+    </p>
+  );
+}
