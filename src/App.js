@@ -59,17 +59,19 @@ const tempMovieData = [
 const KEY = "1bdd65a";
 
 function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("inception");
 
   useEffect(() => {
     async function fetchMovies() {
       try {
         setIsLoading(true);
+        setError("");
         const response = await fetch(
-          `https://www.omdbapi.com/?s=Shrek&apikey=${KEY}`
+          `https://www.omdbapi.com/?s=${query}&apikey=${KEY}`
         );
 
         if (!response.ok) {
@@ -84,19 +86,23 @@ function App() {
         setMovies(data.Search);
       } catch (err) {
         setError(err.message);
-        console.log(err.message);
       } finally {
         setIsLoading(false);
       }
     }
 
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <Nav>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumberResults movies={movies} />
       </Nav>
       <Main>
