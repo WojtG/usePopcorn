@@ -1,11 +1,15 @@
 import { useState } from "react";
 import MovieListItem from "./MovieListItem";
 
-function MovieList({ movies }) {
+function MovieList({ movies, onSelectedMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <MovieListItem movie={movie} key={movie.imdbID} />
+        <MovieListItem
+          onSelectedMovie={onSelectedMovie}
+          movie={movie}
+          key={movie.imdbID}
+        />
       ))}
     </ul>
   );
