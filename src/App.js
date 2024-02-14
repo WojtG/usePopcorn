@@ -9,6 +9,7 @@ import WatchedMovieList from "./WatchedMovieList";
 import WatchedSummary from "./WatchedSummary";
 import Loader from "./Loader";
 import MovieDetails from "./MovieDetails";
+import ErrorMsg from "./ErrorMsg";
 
 const tempWatchedData = [
   {
@@ -57,7 +58,7 @@ const tempMovieData = [
   },
 ];
 
-const KEY = "1bdd65a";
+export const KEY = "1bdd65a";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -141,12 +142,3 @@ function App() {
   );
 }
 export default App;
-
-function ErrorMsg({ msg }) {
-  return (
-    <p className="error">
-      {msg}
-      <span>🛑</span>
-    </p>
-  );
-}
