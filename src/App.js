@@ -62,7 +62,7 @@ export const KEY = "1bdd65a";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("inception");
@@ -74,6 +74,10 @@ function App() {
 
   function handleCloseMovie() {
     setSelectedId(null);
+  }
+
+  function handleAddWatched(movie) {
+    setWatched((curr) => [...curr, movie]);
   }
 
   useEffect(() => {
@@ -129,6 +133,7 @@ function App() {
             <MovieDetails
               onCloseMovie={handleCloseMovie}
               selectedId={selectedId}
+              onAddWatched={handleAddWatched}
             />
           ) : (
             <>
