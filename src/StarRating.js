@@ -27,11 +27,17 @@ export default function StarRating({
   messages = [],
   className = "",
   defaultRating = 0,
+  onSetRating,
 }) {
   const initialRating = Math.max(Math.min(defaultRating, maxRating));
 
   const [rating, setRating] = useState(initialRating);
   const [tempRating, setTempRating] = useState(0);
+
+  function handleRating(rating) {
+    setRating(rating);
+    onSetRating(rating);
+  }
 
   const textStyle = {
     lineHeight: "1",
@@ -47,7 +53,7 @@ export default function StarRating({
           <Star
             key={i}
             isFull={tempRating ? i + 1 <= tempRating : i + 1 <= rating}
-            onClick={() => setRating(i + 1)}
+            onClick={() => handleRating(i + 1)}
             onMouseEnter={() => setTempRating(i + 1)}
             onMouseLeave={() => setTempRating(0)}
             color={color}
