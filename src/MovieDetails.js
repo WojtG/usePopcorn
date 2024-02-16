@@ -4,11 +4,19 @@ import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMsg from "./ErrorMsg";
 
-function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [userRating, setUserRating] = useState("");
+
+  const isWatchedMovie = watched
+    .map((watchedMovie) => watchedMovie.imdbID)
+    .includes(selectedId);
+
+  const userWatchedRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
 
   const {
     Title: title,
@@ -24,6 +32,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
   } = movie;
 
   function handleAdd() {
+    if (isWatchedMovie) return;
     const newWatchedMovie = {
       imdbID: selectedId,
       title,
@@ -91,16 +100,26 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
 
           <section>
             <div className="rating">
-              <StarRating
-                maxRating={10}
-                size={24}
-                key={selectedId}
-                onSetRating={setUserRating}
-              />
-              {userRating && (
-                <button className="btn-add" onClick={handleAdd}>
-                  + Add to list
-                </button>
+              {!isWatchedMovie ? (
+                <>
+                  {" "}
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    key={selectedId}
+                    onSetRating={setUserRating}
+                  />
+                  {userRating && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      + Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>
+                  You rated this movie {userWatchedRating}
+                  <span>⭐</span>
+                </p>
               )}
             </div>
             <p>

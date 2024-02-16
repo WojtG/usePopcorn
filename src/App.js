@@ -134,6 +134,7 @@ function App() {
               onCloseMovie={handleCloseMovie}
               selectedId={selectedId}
               onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ) : (
             <>
