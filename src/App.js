@@ -10,6 +10,7 @@ import WatchedSummary from "./WatchedSummary";
 import Loader from "./Loader";
 import MovieDetails from "./MovieDetails";
 import ErrorMsg from "./ErrorMsg";
+import WelcomeMessage from "./WelcomeMessage";
 
 export const KEY = "1bdd65a";
 
@@ -90,6 +91,9 @@ function App() {
       </Nav>
       <Main>
         <Box>
+          {movies.length === 0 && !isLoading && !error && (
+            <WelcomeMessage message={"Start by searching for a movie 🎬"} />
+          )}
           {error && <ErrorMsg msg={error} />}
           {isLoading && <Loader />}
           {!error && !isLoading && (
