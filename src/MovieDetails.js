@@ -150,9 +150,9 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
             </div>
             <p>
               <em>{plot}</em>
-              <p>Starring : {actors}</p>
-              <p>Directed by {director}</p>
             </p>
+            <p>Starring : {actors}</p>
+            <p>Directed by {director}</p>
           </section>
         </>
       )}
