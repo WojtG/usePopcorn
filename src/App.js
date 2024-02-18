@@ -16,11 +16,14 @@ export const KEY = "1bdd65a";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [watched, setWatched] = useState(function () {
+    const watchedMovies = JSON.parse(localStorage.getItem("watched")) || [];
+    return watchedMovies;
+  });
 
   function handleSelectedMovie(id) {
     setSelectedId((curID) => (curID === id ? null : id));
@@ -39,6 +42,10 @@ function App() {
       watched.filter((watchedMovie) => watchedMovie.imdbID !== id)
     );
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   useEffect(() => {
     const controller = new AbortController();
