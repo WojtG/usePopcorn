@@ -12,18 +12,15 @@ import MovieDetails from "./MovieDetails";
 import ErrorMsg from "./ErrorMsg";
 import WelcomeMessage from "./WelcomeMessage";
 import { useMovies } from "./useMovies";
+import { useLocalStorageState } from "./useLocalStorageState";
 
 export const KEY = "1bdd65a";
 
 function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useState(function () {
-    const watchedMovies = JSON.parse(localStorage.getItem("watched")) || [];
-    return watchedMovies;
-  });
-
   const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   function handleSelectedMovie(id) {
     setSelectedId((curID) => (curID === id ? null : id));
@@ -42,10 +39,6 @@ function App() {
       watched.filter((watchedMovie) => watchedMovie.imdbID !== id)
     );
   }
-
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
 
   return (
     <>
