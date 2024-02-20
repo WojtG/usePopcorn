@@ -1,5 +1,5 @@
-#usePopcorn
-usePopcornis a ReactJS-based application that empowers users to effortlessly search for movies, rate them, and explore their rated movies' combined average length and rating. The app seamlessly integrates with the IMDb website, providing users with additional information such as IMDb ratings, movie posters, and concise descriptions.
+# usePopcorn
+usePopcorn is a ReactJS-based application that empowers users to effortlessly search for movies, rate them, and explore their rated movies' combined average length and rating. The app seamlessly integrates with the IMDb website, providing users with additional information such as IMDb ratings, movie posters, and concise descriptions.
 
 ## Features
 
